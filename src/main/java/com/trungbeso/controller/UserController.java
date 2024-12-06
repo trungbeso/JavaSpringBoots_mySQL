@@ -4,6 +4,7 @@ import com.trungbeso.dto.request.UserCreationRequest;
 import com.trungbeso.dto.request.UserUpdateRequest;
 import com.trungbeso.entity.User;
 import com.trungbeso.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ public class UserController {
 
 	//create Endpoint
 	@PostMapping
-	User createUser(@RequestBody UserCreationRequest request) {
+	User createUser(@RequestBody @Valid UserCreationRequest request) {
 		return userService.createUser(request);
 	}
 
