@@ -3,6 +3,8 @@ package com.trungbeso.service;
 import com.trungbeso.dto.request.UserCreationRequest;
 import com.trungbeso.dto.request.UserUpdateRequest;
 import com.trungbeso.entity.User;
+import com.trungbeso.exception.AppException;
+import com.trungbeso.exception.ErrorCode;
 import com.trungbeso.repositories.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,7 @@ public class UserService {
 		User user = new User();
 
 		if (userRepository.existsByUsername(request.getUsername())) {
-			throw new RuntimeException("Username already exists");
+			throw new AppException(ErrorCode.USER_EXISTED);
 		}
 
 		user.setUsername(request.getUsername());

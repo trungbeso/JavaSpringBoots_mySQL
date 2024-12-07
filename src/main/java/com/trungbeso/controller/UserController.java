@@ -1,5 +1,6 @@
 package com.trungbeso.controller;
 
+import com.trungbeso.dto.request.ApiResponse;
 import com.trungbeso.dto.request.UserCreationRequest;
 import com.trungbeso.dto.request.UserUpdateRequest;
 import com.trungbeso.entity.User;
@@ -19,8 +20,10 @@ public class UserController {
 
 	//create Endpoint
 	@PostMapping
-	User createUser(@RequestBody @Valid UserCreationRequest request) {
-		return userService.createUser(request);
+	ApiResponse<User> createUser(@RequestBody @Valid UserCreationRequest request) {
+		ApiResponse<User> apiResponse = new ApiResponse<>();
+		apiResponse.setResult(userService.createUser(request));
+		return apiResponse;
 	}
 
 	// Lấy danh sách user
