@@ -11,10 +11,10 @@ import java.time.LocalDate;
 @Setter
 public class UserCreationRequest {
 
-	@Size(min = 3, message = "user name must have at least 3 characters")
+	@Size(min = 3, message = "USERNAME_INVALID")
 	private String username;
 
-	@Size(min = 8, message = "password must have at least 8 characters")
+	@Size(min = 8, message = "INVALID_PASSWORD")
 	private String password;
 
 	private String firstName;
