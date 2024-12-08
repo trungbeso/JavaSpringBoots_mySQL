@@ -1,7 +1,5 @@
-package com.trungbeso.dto.request;
+package com.trungbeso.dto.response;
 
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -13,20 +11,17 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserCreationRequest {
+public class UserResponse {
 
-	@Size(min = 3, message = "USERNAME_INVALID")
+	String id;
+
 	String username;
 
-	@Size(min = 8, message = "INVALID_PASSWORD")
 	String password;
 
 	String firstName;
 
 	String lastName;
 
-	@Past
 	LocalDate dob;
-
-
 }
