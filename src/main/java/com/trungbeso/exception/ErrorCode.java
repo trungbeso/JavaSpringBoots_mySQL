@@ -11,6 +11,7 @@ public enum ErrorCode {
 	USERNAME_INVALID(444, "User name must have at least three characters"),
 	UNCATEGORIZED_EXCEPTION(666, "Uncategorized Exception"),
 	USER_EXISTED(1001, "User already existed"),
+	USER_NOT_EXISTED(1002, "User not existed"),
 	;
 
 	private int code;
