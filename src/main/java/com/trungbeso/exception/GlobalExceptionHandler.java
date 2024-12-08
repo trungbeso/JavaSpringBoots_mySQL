@@ -12,19 +12,9 @@ import java.util.Objects;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-	// Gom tất cả các runtime exception vào đây để xử lý
-	@ExceptionHandler(value = RuntimeException.class)
-	ResponseEntity<ApiResponse> handlingRuntimeException(Exception exception) { // Spring tiêm exception vào param
-		ApiResponse apiResponse = new ApiResponse();
-
-		apiResponse.setCode(404);
-		apiResponse.setMessage(exception.getMessage());
-
-		return ResponseEntity.badRequest().body(apiResponse);
-	}
 
 	@ExceptionHandler(value = AppException.class)
-	ResponseEntity<ApiResponse> handlingAppException(AppException exception) { // Spring tiêm exception vào param
+	ResponseEntity<ApiResponse> handlingAppException(AppException exception) {
 		ErrorCode errorCode = exception.getErrorCode();
 		ApiResponse apiResponse = new ApiResponse();
 
@@ -34,15 +24,8 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.badRequest().body(apiResponse);
 	}
 
-	@ExceptionHandler(value = MethodArgumentNotValidException.class)
-	ResponseEntity<String> handlingMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
-		return ResponseEntity.badRequest().body(Objects.requireNonNull(exception.getFieldError()).getDefaultMessage());
-	}
-
-	//Fallback
-	// Xử lý những Exception không expect
 	@ExceptionHandler(value = Exception.class)
-	ResponseEntity<ApiResponse> handlingRuntimeException(RuntimeException exception) { // Spring tiêm exception vào param
+	ResponseEntity<ApiResponse> handlingRuntimeException(Exception exception) {
 		ApiResponse apiResponse = new ApiResponse();
 
 		apiResponse.setCode(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode());
@@ -53,28 +36,21 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(value = MethodArgumentNotValidException.class)
 	ResponseEntity<ApiResponse> handlingValidation(MethodArgumentNotValidException exception) {
-		String enumKey = Objects.requireNonNull(exception.getFieldError()).getDefaultMessage();
-		ErrorCode errorCode = ErrorCode.valueOf(enumKey);
+		String enumKey = null;
+		if (exception.getFieldError() != null) {
+			enumKey = exception.getFieldError().getDefaultMessage();
+		}
 
-		ApiResponse apiResponse = new ApiResponse();
-		apiResponse.setCode(errorCode.getCode());
-		apiResponse.setMessage(errorCode.getMessage());
-
-		return ResponseEntity.badRequest().body(apiResponse);
-	}
-
-	@ExceptionHandler(value = MethodArgumentNotValidException.class)
-	ResponseEntity<ApiResponse> handlingMessageKey(MethodArgumentNotValidException exception) {
-		String enumKey = Objects.requireNonNull(exception.getFieldError()).getDefaultMessage();
-		ErrorCode errorCode = ErrorCode.INVALID_KEY;
-		try {
-			errorCode = ErrorCode.valueOf(enumKey);
-		} catch (IllegalArgumentException ignored){
-
+		ErrorCode errorCode = ErrorCode.INVALID_KEY; // Default error code
+		if (enumKey != null) {
+			try {
+				errorCode = ErrorCode.valueOf(enumKey);
+			} catch (IllegalArgumentException e) {
+				// Log the exception if necessary
+			}
 		}
 
 		ApiResponse apiResponse = new ApiResponse();
-
 		apiResponse.setCode(errorCode.getCode());
 		apiResponse.setMessage(errorCode.getMessage());
 

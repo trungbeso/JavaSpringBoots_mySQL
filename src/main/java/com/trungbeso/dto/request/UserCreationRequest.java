@@ -2,27 +2,32 @@ package com.trungbeso.dto.request;
 
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserCreationRequest {
 
 	@Size(min = 3, message = "USERNAME_INVALID")
-	private String username;
+	String username;
 
 	@Size(min = 8, message = "INVALID_PASSWORD")
-	private String password;
+	String password;
 
-	private String firstName;
+	String firstName;
 
-	private String lastName;
+	String lastName;
 
 	@Past
-	private LocalDate dob;
+	LocalDate dob;
 
 
 }
