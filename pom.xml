@@ -33,6 +33,12 @@
     </properties>
     <dependencies>
 
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+            <version>9.37.2</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok-mapstruct-binding -->
         <dependency>
             <groupId>org.projectlombok</groupId>

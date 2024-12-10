@@ -23,11 +23,9 @@ public class AuthenticationController {
 	@PostMapping("/log-in")
 	ApiResponse<AuthenticationResponse> authenticated(@RequestBody AuthenticationRequest authenticationRequest) {
 		// DI AuthenticationService Bean
-		boolean result = authenticationService.authenticate(authenticationRequest);
+		var result = authenticationService.authenticate(authenticationRequest);
 		return ApiResponse.<AuthenticationResponse>builder()
-			  .result(AuthenticationResponse.builder()
-				    .isAuthenticated(result)
-				    .build())
+			  .result(result)
 			  .build();
 	}
 }

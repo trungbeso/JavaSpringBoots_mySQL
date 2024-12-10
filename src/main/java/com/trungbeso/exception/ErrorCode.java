@@ -12,6 +12,7 @@ public enum ErrorCode {
 	UNCATEGORIZED_EXCEPTION(666, "Uncategorized Exception"),
 	USER_EXISTED(1001, "User already existed"),
 	USER_NOT_EXISTED(1002, "User not existed"),
+	UNAUTHENTICATED(1003, "Unauthenticated"),
 	;
 
 	private int code;
